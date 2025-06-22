@@ -1,28 +1,50 @@
-# RF Classifier with Synthetic Clinical Data
+# Concussion Classifier with Synthetic Clinical Data
 
-This project demonstrates a machine learning pipeline for classifying clinical outcomes using a synthetic dataset modeled after real-world data.  
-It includes preprocessing, oversampling, model tuning, evaluation, and is structured for easy sharing and reproducibility.
+This project demonstrates a machine learning pipeline and interactive dashboard for classifying clinical outcomes using synthetic resting-state fMRI data.  
+It includes preprocessing, oversampling, model tuning, evaluation, and an interactive Dash app to visualize results. The data used are synthetic, but resemble the original, clinical dataset.
 
-Resting state functional magnetic resonance imaging (rs-fMRI) data have the potential to identify the neuropathology associated with concussion. Yet the rs-fMRI signal, a timeseries (known as the BOLD timeseries), can be analyzed and quantified in many ways. Which metric is the most discriminatory between those with concussion and healthy controls is unknown. 
+Resting-state functional magnetic resonance imaging (rs-fMRI) data may help identify neuropathology associated with concussion. The BOLD signal can be quantified using several metrics. This dataset uses six rs-fMRI-derived metrics:
 
-This dataset uses 6 rs-fMRI metrics - namely the BOLD timeseries mean, standard deviation, entropy (measured by the Lyapunov exponent and Hurst exponent), and its amplitiude of low frequency fluctuations (ALFF) and fractional ALFF. For each region of interest (ROI), or anatomical region defined by a common neuroimaging atlas (Harvard-Oxford), all 6 rs-fMRI metrics are computed. 
+- Mean
+- Standard deviation
+- Entropy (via Lyapunov exponent and Hurst exponent)
+- Amplitude of low-frequency fluctuations (ALFF)
+- Fractional ALFF
 
-This analysis allows for an understanding of the following: 
-- Which metric-ROI pairs are most discriminatory between concussion subjects and healthy controls? 
-- Is one metric better at classifying concusison than the others? 
-- Is one ROI better at classifying concussion than the others? 
+Each metric is computed for every region of interest (ROI) using the Harvard-Oxford atlas.
+
+This analysis helps explore:
+- Which metric-ROI pairs best discriminate between concussion and control?
+- Which metric is most informative?
+- Which ROIs are most relevant?
+
+Results are displayed in a hosted interactive dashboard, including ROC and precision-recall curves with plain-English interpretations for each threshold.
+
+## Dashboard
+
+The dashboard includes a series of plots, with the ROC Curve and Precision-Recall curve clickable, such that clicking on a given data point gives a plain English language summary of what it represents.
+
+Live App: https://concussion-diagnosis-model-performance.onrender.com/
+
+The dashboard includes:
+- ROC Curve
+- Precision-Recall Curve
+- Confusion Matrix
+- Learning Curve (F1 Score)
+- 3-Fold CV Scores
+- Feature Importances
+- Glossary of ML terms
 
 ## Data
 
-- `synthetic_data.csv` is generated using `generate_synthetic_data.py`
-- Mirrors statistical structure of actual clinical metrics (not shared due to privacy)
+- `synthetic_data.csv`: synthetic fMRI data (last column = target label)
 
 ## Features
 
 - SMOTE for class imbalance
-- Gradient Boosting classifier
-- Hyperparameter tuning with RandomizedSearchCV
-- Evaluation with ROC & Precision-Recall curves
+- Gradient Boosting Classifier
+- Randomized hyperparameter tuning
+- Evaluation: ROC, PR, CV scores, learning curves
 
 ## How to Use
 
@@ -30,17 +52,12 @@ This analysis allows for an understanding of the following:
 # Step 1: Install dependencies
 pip install -r requirements.txt
 
-# Step 2: Generate synthetic data
-python generate_synthetic_data.py
+# Step 2: Run the training script to produce the model and data splits
+python rf_classifier.py
 
-# Step 3: Open and run the notebook
-jupyter notebook rf_classifier_synthetic.ipynb
+# Step 3: Launch the dashboard
+python app.py
 ```
-
-## Reproducible
-
-Use the script with any CSV in the same format to create safe-to-share synthetic data.
-
 ## Notes
 
-Built as part of a data science portfolio. Real clinical data was replaced by synthetic equivalents.
+Built as part of a data science portfolio, with the publication using the original clinical data pending. Real clinical data was replaced by synthetic equivalents.
