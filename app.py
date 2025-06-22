@@ -174,5 +174,8 @@ def update_pr_summary(clickData):
         return (f"At threshold {thresh:.2f}, precision is {prec_ * 100:.1f}%, and recall is {rec_ * 100:.1f}%.")
     return "Click a point to see interpretation."
 
+import os
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 8050))  # Render dynamically assigns PORT
+    app.run(host="0.0.0.0", port=port, debug=True)
