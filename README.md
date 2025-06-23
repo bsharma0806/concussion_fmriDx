@@ -33,7 +33,7 @@ The dashboard includes:
 - Learning Curve (F1 Score)
 - 3-Fold CV Scores
 - Feature Importances
-- Glossary of ML terms
+- Glossary of ML terms 
 
 ## Data
 
