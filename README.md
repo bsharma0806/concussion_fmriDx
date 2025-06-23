@@ -18,13 +18,13 @@ This analysis helps explore:
 - Which metric is most informative?
 - Which ROIs are most relevant?
 
-Results are displayed in a hosted interactive dashboard, including ROC and precision-recall curves with plain-English interpretations for each threshold.
+Results are displayed in a hosted interactive dashboard (it loads slowly on the free version of Render), including ROC and precision-recall curves with plain-English interpretations for each threshold.
 
 ## Dashboard
 
 The dashboard includes a series of plots, with the ROC Curve and Precision-Recall curve clickable, such that clicking on a given data point gives a plain English language summary of what it represents.
 
-Live App: https://concussion-diagnosis-model-performance.onrender.com/
+[![View Dashboard on Render](https://img.shields.io/badge/View%20Live%20App-Render-blue)](https://concussion-diagnosis-model-performance.onrender.com/)
 
 The dashboard includes:
 - ROC Curve

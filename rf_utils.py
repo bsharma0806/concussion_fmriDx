@@ -13,5 +13,5 @@ def load_model(path="best_model.pkl"):
     return joblib.load(path)
 
 def load_splits(path="data/splits.pkl"):
-    """Load the exact train/test splits you saved."""
-    return joblib.load(path)  # returns X_train, X_test, y_train, y_test
+    """Load the exact train/test splits that were saved."""
+    return joblib.load(path)

@@ -6,36 +6,37 @@ import joblib
 from sklearn.metrics import roc_curve, precision_recall_curve, confusion_matrix
 from sklearn.model_selection import StratifiedKFold, cross_val_score, learning_curve
 from rf_utils import load_data
+import os
 
-# Load model and splits
+# load model and splits
 model = joblib.load("best_model.pkl")
 X, _, feature_names = load_data("synthetic_data.csv")
 X_train, X_test, y_train, y_test = joblib.load("data/splits.pkl")
 y_pred = model.predict(X_test)
 y_proba = model.predict_proba(X_test)[:, 1]
 
-# ROC and PR metrics
+# roc and pr metrics
 fpr, tpr, roc_thresh = roc_curve(y_test, y_proba)
 precision, recall, pr_thresh = precision_recall_curve(y_test, y_proba)
 
-# Confusion matrix
+# confusion matrix
 cm = confusion_matrix(y_test, y_pred)
 
-# Feature importances
+# feature importances
 feat_imp = model.named_steps["classifier"].feature_importances_
 
-# CV scores
+# cv scores
 cv = StratifiedKFold(n_splits=3, shuffle=True, random_state=89)
 cv_scores = cross_val_score(model, X_train, y_train, cv=cv, scoring="f1")
 
-# Learning curve
+# learning curve
 train_sizes, tr_scores, val_scores = learning_curve(
     model, X_train, y_train,
     cv=5, scoring="f1",
     train_sizes=np.linspace(0.1, 1.0, 10)
 )
 
-# ROC Plot
+# roc plot
 roc_figure = go.Figure()
 roc_figure.add_trace(go.Scatter(
     x=fpr,
@@ -55,7 +56,7 @@ roc_figure.add_trace(go.Scatter(
 ))
 roc_figure.update_layout(xaxis_title="False Positive Rate", yaxis_title="True Positive Rate")
 
-# PR Plot
+# pr plot
 pr_figure = go.Figure()
 pr_figure.add_trace(go.Scatter(
     x=recall,
@@ -75,11 +76,11 @@ pr_figure.add_trace(go.Scatter(
 ))
 pr_figure.update_layout(xaxis_title="Recall", yaxis_title="Precision")
 
-# Initialize Dash app
+# initialize Dash app
 app = dash.Dash(__name__)
 app.title = "Model Performance Dashboard"
 
-# App layout
+# app layout
 app.layout = html.Div(style={"fontFamily": "sans-serif", "margin": "20px"}, children=[
     html.H1("Model Performance Dashboard"),
 
@@ -157,7 +158,7 @@ app.layout = html.Div(style={"fontFamily": "sans-serif", "margin": "20px"}, chil
     ], style={"lineHeight": "1.8"})
 ])
 
-# Callbacks
+# callbacks
 @app.callback(Output("roc-summary", "children"), Input("roc-plot", "clickData"))
 def update_roc_summary(clickData):
     print("ROC ClickData:", clickData)
@@ -173,8 +174,6 @@ def update_pr_summary(clickData):
         thresh, prec_, rec_ = clickData["points"][0]["customdata"]
         return (f"At threshold {thresh:.2f}, precision is {prec_ * 100:.1f}%, and recall is {rec_ * 100:.1f}%.")
     return "Click a point to see interpretation."
-
-import os
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8050))  # Render dynamically assigns PORT
