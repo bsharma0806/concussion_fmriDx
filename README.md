@@ -1,9 +1,14 @@
 # Concussion Classifier with Synthetic Clinical Data
 
-This project demonstrates a machine learning pipeline and interactive dashboard for classifying clinical outcomes using synthetic resting-state fMRI data.  
-It includes preprocessing, oversampling, model tuning, evaluation, and an interactive Dash app to visualize results. The data used are synthetic, but resemble the original, clinical dataset.
+## Scope 
 
-Resting-state functional magnetic resonance imaging (rs-fMRI) data may help identify neuropathology associated with concussion. The BOLD signal can be quantified using several metrics. This dataset uses six rs-fMRI-derived metrics:
+This project demonstrates a full-stack machine learning pipeline and interactive dashboard for classifying clinical outcomes using **synthetic resting-state fMRI** data. It includes preprocessing, oversampling, model tuning, evaluation, and an interactive Dash app to visualize results. It simulates a real-world use case in which quantitative neuroimaging metrics might assist in concussion diagnosis. Again, the data used are synthetic, but resemble the original, clinical dataset (pending publication).
+
+## Clinical context
+
+Concussions are mainly diagnosed based on self-reported symptoms. But we can use functional MRI (fMRI) to measure “brain activity” and perform diagnoses more objectively, given that fMRI disturbances are a proxy for the neuropathology of concussion. This will help address the clinical problem of under and/or missed diagnosis of concussion, as well as providing a pathology-based diagnosis that can be used for monitoring of injury progression or recovery.
+
+fMRI data are a timeseries known as the BOLD (Blood Oxygen Level Dependent) signal. This signal can and has been quantified and summarized using several metrics, including the ones below: 
 
 - Mean
 - Standard deviation
@@ -11,7 +16,9 @@ Resting-state functional magnetic resonance imaging (rs-fMRI) data may help iden
 - Amplitude of low-frequency fluctuations (ALFF)
 - Fractional ALFF
 
-Each metric is computed for every region of interest (ROI) using the Harvard-Oxford atlas.
+And each metric is computed for every region of interest (ROI) using the Harvard-Oxford neuroanatomical atlas.
+
+Despite the neuroimaging research into concussion, we do not know about which BOLD metric or ROI is most discriminatory between concussed and healthy brains. 
 
 This analysis helps explore:
 - Which metric-ROI pairs best discriminate between concussion and control?
@@ -60,4 +67,4 @@ python app.py
 ```
 ## Notes
 
-Built as part of a data science portfolio, with the publication using the original clinical data pending. Real clinical data was replaced by synthetic equivalents.
+Built as part of a data science portfolio (with an accompanying blod post available here: https://bsharma.super.site/projects-database/gradient-boosting), with the publication using the original clinical data pending. Real clinical data was replaced by synthetic equivalents.
