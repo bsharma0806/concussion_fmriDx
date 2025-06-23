@@ -8,7 +8,7 @@ def test_load_data_returns_correct_shapes():
     assert list(X.columns) == feature_names, "Feature names must match column names."
 
 def test_load_model_can_predict():
-    model = load_model("best_model.pkl:")
+    model = load_model("best_model.pkl")
     assert hasattr(model, "predict"), "Model should have a .predict() method."
 
 def test_load_splits_shapes_match():
